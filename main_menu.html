@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Graph</title>
+    <link rel="stylesheet" href="styles.css">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .modeBtnStyle {
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            width: 30%;
+            height: 10px;
+            border: none;
+            outline: none;  /* This removes the default focus outline */
+            box-shadow: none;  /* This prevents other shadow effects when focused */
+        }
+
+        .modeBtnStyle:focus {
+            outline: none;  /* Ensure there's no focus outline on click */
+            box-shadow: none;  /* Prevent focus ring as box-shadow */
+        }
+    </style>
+</head>
+<body>
+    <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80" style="background-color: blueviolet;" id="svg_bg">
+        <defs>
+            <style>
+                @keyframes rotate {
+                         0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+                .out-top {
+                    animation: rotate 20s linear infinite;
+                    transform-origin: 13px 25px;
+                }
+                .in-top {
+                    animation: rotate 10s linear infinite;
+                    transform-origin: 13px 25px;
+                }
+                .out-bottom {
+                    animation: rotate 25s linear infinite;
+                    transform-origin: 84px 93px;
+                }
+                .in-bottom {
+                    animation: rotate 15s linear infinite;
+                    transform-origin: 84px 93px;
+                }
+            </style>
+        </defs>
+        <!-- <path fill="#9b5de5" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+        <path fill="#f15bb5" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        <path fill="#00bbf9" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
+        <path fill="#00f5d4" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/> -->
+        <path id="out-top" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+        <path id="in-top" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        <path id="out-bottom" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
+        <path id="in-bottom" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/> 
+    </svg>
+       
+    <div class="container" id="bodyContainer">
+        <div class="row" style="height: 100vh;">
+            <div class="col-md-1"></div>
+            <div class="col-md-10" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <div style="background-color: rgba(255, 255, 255, 0.699); padding: 20px; border-radius: 5px;">
+                    <h4 style="margin-bottom: 20px;">Welcome to The Rail Guardians</h4>
+                    <div style="background-color: rgba(255, 255, 255, 0.699); padding: 20px; border-radius: 5px;" id="mode1">
+                        <div>
+                            <h5>Rail Guardians reporting Sir!</h5>
+                            <p style="text-align: justify;">
+                                You're in charge of keeping the railway tracks safe in a world filled with protests and demands for change. As the head of railway operations, your mission is to prevent accidents by making sure every piece of track is watched over by your team of dedicated track builders.
+                                Protesters might target and destroy unwatched sections of the railway to make their voices heard. Your job is to strategically place your builders so that no track is left unguarded.
+                                Ready to take on the challenge? Keep your eyes sharp and your mind sharper to keep the railways and your passengers safe.
+                            </p>
+                            <a href="#" class="btn btn-sm" id="linkBtn1a">Scene 1</a>
+                            <a href="#" class="btn btn-sm" id="linkBtn1b">Scene 2</a>
+                        </div>
+                    </div>
+                    <div style="background-color: rgba(255, 255, 255, 0.699); padding: 20px; border-radius: 5px; display: none;" id="mode2">
+                        <div>
+                            <h5>The Challenge has Escalated!</h5>
+                            <p style="text-align: justify;">
+                                Protestors have managed to steal the railway track map, making it impossible for you to monitor the tracks through your usual systems. Now, the only way to keep track of the network is through reports from your field builders. In this level, you'll need to rely on your memory and strategic planning skills. Your builders will relay information about sections of the track as they survey them, but once communication ends, you won’t have a visual map to refer back to. You must memorize and visualize the track layout based on their reports. 
+                                Can you keep the railways safe using only the details you hold in your mind? Let's find out in this thrilling new challenge!
+                            </p>
+                            <a href="#" class="btn btn-sm" id="linkBtn2a">Scene 1</a>
+                            <a href="#" class="btn btn-sm" id="linkBtn2b">Scene 2</a>
+                        </div>
+                    </div>
+                    <div style="background-color: rgba(255, 255, 255, 0.699); padding: 20px; border-radius: 5px; display: none;" id="mode3">
+                        <div>
+                            <h5>The Final Attempt!</h5>
+                            <p style="text-align: justify;">
+                                As the day winds down, both your track builders and the protestors are feeling the wear of their efforts. Tonight, the energy levels of your builders are limited, and they can only shift their monitoring positions for limited times. Similarly, the protestors have just enough energy as the builders for final attempts to disrupt the railway tracks. 
+                                Your task is to strategically redeploy your builders to the most critical sections of the track for these last few hours. Use your builders' remaining energy efficiently and outsmart the protestors’ final moves. Remember, this is a crucial moment; if you can keep the tracks safe tonight, there's a good chance the government will meet the protestors' demands by tomorrow, and normal operations can resume.
+                            </p>
+                            <a href="#" class="btn btn-sm" id="linkBtn3a">Scene 1</a>
+                            <a href="#" class="btn btn-sm" id="linkBtn3b">Scene 2</a>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content:space-between; margin-top: 20px;">
+                        <button class="modeBtnStyle" style="background-color: rgba(0, 0, 0, 0.5);" id="btnMode1"></button>
+                        <button class="modeBtnStyle" id="btnMode2"></button>
+                        <button class="modeBtnStyle" id="btnMode3"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="com-md-1"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // for light and dark mode
+            const urlParams = new URLSearchParams(window.location.search);
+            const mode = urlParams.get('mode');
+            var colors = ['#9b5de5','#f15bb5','#00bbf9','#00f5d4', 'blueviolet'];
+            if(mode === 'dark') {
+                colors = ['#041C32','#04293A','#070F2B','#1B1A55', '#2D3250'];
+                document.getElementById('linkBtn1a').classList.add('btn-dark');
+                document.getElementById('linkBtn1b').classList.add('btn-dark');
+                document.getElementById('linkBtn2a').classList.add('btn-dark');
+                document.getElementById('linkBtn2b').classList.add('btn-dark');
+                document.getElementById('linkBtn3a').classList.add('btn-dark');
+                document.getElementById('linkBtn3b').classList.add('btn-dark');
+            }
+            else{
+                document.getElementById('linkBtn1a').classList.add('btn-success');
+                document.getElementById('linkBtn1b').classList.add('btn-success');
+                document.getElementById('linkBtn2a').classList.add('btn-success');
+                document.getElementById('linkBtn2b').classList.add('btn-success');
+                document.getElementById('linkBtn3a').classList.add('btn-success');
+                document.getElementById('linkBtn3b').classList.add('btn-success');
+            }
+            document.getElementById('out-top').style.fill = colors[0];
+            document.getElementById('in-top').style.fill = colors[1];
+            document.getElementById('out-bottom').style.fill = colors[2];
+            document.getElementById('in-bottom').style.fill = colors[3];
+            document.getElementById('svg_bg').style.backgroundColor = colors[4];
+            
+            document.getElementById('linkBtn1a').href = 'mode1a.html?mode=' + mode;
+            document.getElementById('linkBtn1b').href = 'mode1b.html?mode=' + mode;
+
+            document.getElementById('linkBtn2a').href = 'mode2a.html?mode=' + mode;
+            document.getElementById('linkBtn2b').href = 'mode2b.html?mode=' + mode;
+
+            document.getElementById('linkBtn3a').href = 'mode3a.html?mode=' + mode;
+            document.getElementById('linkBtn3b').href = 'mode3b.html?mode=' + mode;
+
+            // add event listeners for mode buttons
+            document.getElementById('btnMode1').addEventListener('click', function() {
+                document.getElementById('mode1').style.display = 'block';
+                document.getElementById('mode2').style.display = 'none';
+                document.getElementById('mode3').style.display = 'none';
+                document.getElementById('btnMode1').style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                document.getElementById('btnMode2').style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+                document.getElementById('btnMode3').style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+            });
+            document.getElementById('btnMode2').addEventListener('click', function() {
+                document.getElementById('mode1').style.display = 'none';
+                document.getElementById('mode2').style.display = 'block';
+                document.getElementById('mode3').style.display = 'none';
+                document.getElementById('btnMode1').style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+                document.getElementById('btnMode2').style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                document.getElementById('btnMode3').style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+            });
+            document.getElementById('btnMode3').addEventListener('click', function() {
+                document.getElementById('mode1').style.display = 'none';
+                document.getElementById('mode2').style.display = 'none';
+                document.getElementById('mode3').style.display = 'block';
+                document.getElementById('btnMode1').style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+                document.getElementById('btnMode2').style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+                document.getElementById('btnMode3').style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            });
+        });
+    </script>
+
+</body>
+</html>

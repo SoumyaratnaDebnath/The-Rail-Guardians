@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Graph</title>
+    <link rel="stylesheet" href="styles.css">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80" style="background-color: blueviolet;" id="svg_bg">
+        <defs>
+            <style>
+                @keyframes rotate {
+                         0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+                .out-top {
+                    animation: rotate 20s linear infinite;
+                    transform-origin: 13px 25px;
+                }
+                .in-top {
+                    animation: rotate 10s linear infinite;
+                    transform-origin: 13px 25px;
+                }
+                .out-bottom {
+                    animation: rotate 25s linear infinite;
+                    transform-origin: 84px 93px;
+                }
+                .in-bottom {
+                    animation: rotate 15s linear infinite;
+                    transform-origin: 84px 93px;
+                }
+            </style>
+        </defs>
+        <!-- <path fill="#9b5de5" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+        <path fill="#f15bb5" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        <path fill="#00bbf9" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
+        <path fill="#00f5d4" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/> -->
+        <path id="out-top" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+        <path id="in-top" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+        <path id="out-bottom" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
+        <path id="in-bottom" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/> 
+
+    </svg>
+       
+    <!-- Pop-up for selecting max red vertices -->
+    <div id="popup" class="gradient">
+        <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80" style="background-color: blueviolet;" id="svg_bg-pop">
+            <defs>
+                <style>
+                    @keyframes rotate {
+                             0% {
+                            transform: rotate(0deg);
+                        }
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                    .out-top {
+                        animation: rotate 20s linear infinite;
+                        transform-origin: 13px 25px;
+                    }
+                    .in-top {
+                        animation: rotate 10s linear infinite;
+                        transform-origin: 13px 25px;
+                    }
+                    .out-bottom {
+                        animation: rotate 25s linear infinite;
+                        transform-origin: 84px 93px;
+                    }
+                    .in-bottom {
+                        animation: rotate 15s linear infinite;
+                        transform-origin: 84px 93px;
+                    }
+                </style>
+            </defs>
+            <path id="out-top-pop" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
+            <path id="in-top-pop" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
+            <path id="out-bottom-pop" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
+            <path id="in-bottom-pop" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/> 
+        </svg>
+        
+        <div>
+            <div class="row" style="height: 100vh;">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6" style="display: flex; justify-content: center; align-items: center;">
+                    <div style="background-color: rgba(255,255,255,0.95); padding: 25px; border-radius: 10px;" class="shadow">
+                        <p style="text-align: justify;">
+                            <b>Rules.</b>
+                            The game starts with the defender placing the builders on the graph. 
+                            The attacker then tries to attack the tracks. 
+                            The attacker wins if an ungarded track is attacked.
+                            Defender wins if all tracks are guarded till the selected number of rounds.
+                        </p>
+                        
+                        <label for="maxRedVertices" class="builder_select_text">Select the Number of Builders</label>
+                        <input type="number" id="maxRedVertices" value="7" class="form-control" style="margin-top: 0px" disabled>
+
+                        <label for="maxRounds" class="builder_select_text" style="margin-top: 20px;">Select the Number of Rounds</label>
+                        <input type="number" id="maxRounds" value="10" min="2" max="50" class="form-control" style="margin-top: 0px">
+
+                        <button onclick="confirmSelection()" class="btn btn-primary" style="margin-top: 20px;">Confirm</button>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="bodyContainer">
+        <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+            <div class="col-md-6" style="background-color: rgba(255,255,255,0.7); display: flex; justify-content: center; align-items: center; border-radius: 5px;" id="moveDesc">
+                Click on the &nbsp;<i>stations</i>&nbsp; to place the builders.
+            </div>
+            <div class="col-md-2">
+                <button id="player1pass" class="btn btn-sm btn-light" style="height: 100%; display: none; float: right;">Pass to Attacker</button>
+            </div>
+            <div class="col-md-4">
+                <div id="status">
+                    Defender's turn
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="width: 100%; height: 80vh;">
+                <canvas id="graphCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="gameOverContainerDefenderWin" style="display: none;">
+        <div class="row" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="shadow" style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
+                    <div style="text-align: center;">
+                        <h5 style="font-size: 30px; color: red; font-weight: bold;">Game Over!</h5>
+                        <p style="font-size: 20px; margin-top: 30px; font-style: italic;">The attacker lost the game. <br><b>The defender has defended the network.</b></p>
+                        <a href="#" class="btn btn-success" style="margin-top: 20px;" id="playAgain1">Play Again</a>
+                        <a href="#" class="btn btn-primary" style="margin-top: 20px;" id="mainMenu1">Main Menu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <div class="container" id="gameOverContainerAttackerWin" style="display: none;">
+        <div class="row" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="shadow" style="background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px;">
+                    <div style="text-align: center;">
+                        <h5 style="font-size: 30px; color: red; font-weight: bold;">Game Over!</h5>
+                        <p style="font-size: 20px; margin-top: 30px; font-style: italic;"><b>The attacker won the game.</b> <br>The defender could not defended the network.</p>
+                        <a href="#" class="btn btn-success" style="margin-top: 20px;" id="playAgain2">Play Again</a>
+                        <a href="#" class="btn btn-primary" style="margin-top: 20px;" id="mainMenu2">Main Menu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+  
+    <script src="graph1b.js"></script>
+
+</body>
+</html>
